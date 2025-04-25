@@ -10,31 +10,26 @@
   group:
 CMD*/
 
-const lastBonusTime = User.getProp("last_bonus_time");
-const now = Date.now();
+const intervalHours  = Number(config.BONUS_INTERVAL) || 24;    // hours
+const bonusAmount    = Number(config.BONUS_AMOUNT)  || 5;      // money
+const currency       = config.CURRENCY             || "USD";
 
-const intervalHours = Number(config.BONUS_INTERVAL) || 24;
-const bonusAmount = Number(config.BONUS_AMOUNT) || 5;
-const currency = config.CURRENCY || "USD";
-const intervalMs = intervalHours * 60 * 60 * 1000;
-
-let commandName;
-
-if (!lastBonusTime || (now - lastBonusTime) >= intervalMs) {
-  // Bonus is available
+function onEnding() {
   balance.add(bonusAmount);
-  User.setProp("last_bonus_time", now);
-
   smartBot.add({ bonus: bonusAmount, interval: intervalHours });
-  commandName = "bonus:received";
-} else {
-  // Bonus not available yet
-  const remainingMs = (lastBonusTime + intervalMs) - now;
-  const hoursRemaining = Math.ceil(remainingMs / (60 * 60 * 1000));
-
-  smartBot.add({ remaining: hoursRemaining });
-  commandName = "bonus:alreadyClaimed";
+  smartBot.run({ command: "bonus:received" });
+  return true;
 }
 
-// Show response and stop further execution
-return smartBot.run({ command: commandName });
+function onWaiting(waitSec) {
+  const hoursRemaining = Math.ceil(waitSec / 3600);
+  smartBot.add({ remaining: hoursRemaining });
+  smartBot.run({ command: "bonus:alreadyClaimed" });
+}
+
+Libs.CooldownLib.user.watch({
+  name: "DailyBonus",
+  time: intervalHours * 3600, // in seconds
+  onEnding:   onEnding,
+  onWaiting:  onWaiting
+});
