@@ -192,6 +192,8 @@ const LANG = {
   },
   "titles": {
     "curLang": currentLang,
+    // one medals for all languages
+    "medals": "🥇,🥈,🥉",
     "pending": "🔄 Pending",
     "approved": "✅ Approved",
     "rejected": "❌ Rejected",

@@ -18,7 +18,7 @@ const topList = RefLib.getTopList();
 const topReferrers = topList.get(); // This gives an array of top referrers
 
 // Emojis for the top 3 referrers
-const medals = ["🥇", "🥈", "🥉"];
+const medals = smartBot.params.medals.split(",");
 
 // This will store the final leaderboard text
 let topRefText = "";
