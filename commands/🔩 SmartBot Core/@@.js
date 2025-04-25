@@ -1,13 +1,13 @@
 /*CMD
   command: @@
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🔩 SmartBot Core
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 smartBot.handle();

@@ -1,13 +1,13 @@
 /*CMD
   command: acceptWithdrawAmount
-  help: 
+  help:
   need_reply: true
-  auto_retry_time: 
+  auto_retry_time:
   folder: 💸 Withdraw
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Exit if no message is provided

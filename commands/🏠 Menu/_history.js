@@ -1,13 +1,13 @@
 /*CMD
   command: /history
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🏠 Menu
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Template for each individual withdrawal

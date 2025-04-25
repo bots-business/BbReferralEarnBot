@@ -1,13 +1,13 @@
 /*CMD
   command: /ban
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🔐 Admin
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Admin validation is already handled in the master command (@), no need to check again here

@@ -1,13 +1,13 @@
 /*CMD
   command: /joining
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 💬 Joining
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Get a list of channels the user still needs to join

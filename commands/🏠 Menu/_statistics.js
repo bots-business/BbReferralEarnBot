@@ -1,13 +1,13 @@
 /*CMD
   command: /statistics
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🏠 Menu
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Get the total number of users (or 0 if it hasn't been set yet)

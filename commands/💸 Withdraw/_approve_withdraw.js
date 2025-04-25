@@ -1,13 +1,13 @@
 /*CMD
   command: /approve_withdraw
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 💸 Withdraw
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Parse input params: [approved, userId, withdrawId]

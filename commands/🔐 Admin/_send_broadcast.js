@@ -1,13 +1,13 @@
 /*CMD
   command: /send_broadcast
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🔐 Admin
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Exit early if required options are not available

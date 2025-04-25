@@ -1,13 +1,13 @@
 /*CMD
   command: /claim_bonus
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🏠 Menu
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 const lastBonusTime = User.getProp("last_bonus_time");

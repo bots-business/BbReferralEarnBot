@@ -1,13 +1,13 @@
 /*CMD
   command: /withdraw
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 💸 Withdraw
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Wallet address is already defined in the "@" command, so we check if it's missing

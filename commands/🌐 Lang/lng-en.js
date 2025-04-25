@@ -1,13 +1,13 @@
 /*CMD
   command: lng-en
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🌐 Lang
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 const currentLang = "🇺🇸 English";

@@ -1,13 +1,13 @@
 /*CMD
   command: setLng
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: 🌐 Lang
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Set the new language for the user, either "en" for English or "es" for Spanish

@@ -1,13 +1,13 @@
 /*CMD
   command: /setup
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
+  auto_retry_time:
   folder: ⚙️ Setup
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Uncomment this for production to stop setup from re-running

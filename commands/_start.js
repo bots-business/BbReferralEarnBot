@@ -1,13 +1,13 @@
 /*CMD
   command: /start
-  help: 
+  help:
   need_reply: false
-  auto_retry_time: 
-  folder: 
-  answer: 
-  keyboard: 
-  aliases: 
-  group: 
+  auto_retry_time:
+  folder:
+  answer:
+  keyboard:
+  aliases:
+  group:
 CMD*/
 
 // Run setup if config is missing or not yet initialized
