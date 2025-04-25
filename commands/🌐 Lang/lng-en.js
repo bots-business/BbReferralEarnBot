@@ -191,7 +191,8 @@ const LANG = {
     }
   },
   "titles": {
-    "curLang": currentLang
+    "curLang": currentLang,
+    "withdrawalTemplate": "🔹 *Withdrawal #{index}:*\n⏰ *Time:* {time}\n💸 *Amount:* {amount}\n📌 *Status:* {status}"
   },
   "types": {
     "adminOnlyError": "⛔ Access Denied!\n\nThis action is restricted to administrators only.",

@@ -10,14 +10,6 @@
   group:
 CMD*/
 
-// Template for each individual withdrawal
-const withdrawalTemplate = ({ index, time, amount, status }) => `
-🔹 *Withdrawal #${index}:*
-⏰ *Time:* ${time}
-💸 *Amount:* ${amount}
-📌 *Status:* ${status}
-`;
-
 // Retrieve user-specific withdrawal history
 const history = Bot.getProp("withdraw_history-" + user.telegramid, []);
 
@@ -36,12 +28,14 @@ const withdrawalsText = latestWithdrawals.map((item, index) => {
 
   const status = item.status === "pending" ? "🔄 Pending" : item.status === "approved" ? "✅ Approved" : "❌ Rejected";
 
-  return withdrawalTemplate({
+  smartBot.add({
     index: index + 1,
     time: formattedTime,
     amount: item.amount,
     status: status
   });
+
+  return smartBot.fill(smartBot.params.withdrawalTemplate)
 }).join("");
 
 // Save final values to use in a message template
