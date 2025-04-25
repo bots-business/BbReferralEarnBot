@@ -10,8 +10,10 @@
   group:
 CMD*/
 
-// Uncomment this for production to stop setup from re-running
-// return
+
+Bot.sendMessage("⚠️ Setup command NOT executed. See /setup code for details.");
+// after setup you need to comment this line:
+return
 
 // Define supported languages for the bot
 const languages = [ 'en', 'es' ];
