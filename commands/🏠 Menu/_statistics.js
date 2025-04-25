@@ -29,12 +29,13 @@ for (let i = 0; i < topReferrers.length && i < 10; i++) {
   const position = medals[i] || `${i + 1}.`; // Use medal for top 3, else number
 
   // Create a line with their Telegram profile and number of referrals
-  topRefText += `${position} [${ref.user.telegramid}](tg://user?id=${ref.user.telegramid}) — ${ref.value} referrals\n`;
+  topRefText += `${position} [${ref.user.telegramid}](tg://user?id=${ref.user.telegramid}) ` +
+                `— ${ref.value} ${smartBot.params.textReferrals}\n`;
 }
 
 // If no one has referred anyone yet, show a default message
 if (topRefText === "") {
-  topRefText = smartBot.params.noReferrals;
+  topRefText = smartBot.params.textNoReferrals;
 }
 
 // Pass the total users and top referral list to SmartBot for message templates
