@@ -11,41 +11,35 @@
 CMD*/
 
 // Run setup if config is missing or not yet initialized
-if (!config || Object.keys(config).length === 0) {
-  smartBot.run({ command: '/setup' });
-  return;
-}
-
-// Enables referral tracking (must be called before getAttractedBy)
-RefLib.track();
-
-// Proceed only if this is a newly created private chat
-if (chat?.just_created && chat?.chat_type === 'private') {
-
-  const inviter = RefLib.getAttractedBy();
-
-  // Ensure inviter exists and isn't the same user
-  if (inviter && inviter.telegramid !== user.telegramid) {
-    const reward = Number(config.REFERRAL_REWARD) || 1;
-
-    const inviterBalance = ResLib.anotherUserRes('balance', inviter.telegramid);
-    const inviterEarnings = ResLib.anotherUserRes('referral_earnings', inviter.telegramid);
-
-    // Apply referral reward to inviter's balance and earnings
-    inviterBalance.add(reward);
-    inviterEarnings.add(reward);
-
-    // Send reward notification to inviter
-    smartBot.add({ referral_reward: reward });
-    smartBot.run({
-      command: 'ref:notifyInviter',
-      options: {
-        inviter_id: inviter.telegramid
-      }
-    });
+function ensureConfigInitialized() {
+  if(config && Object.keys(config).length >0) {
+    return true;
   }
 
-  // Update total user count
+  smartBot.run({ command: '/setup' });
+  return false;
+}
+
+// Handle referral reward for inviter
+function handleReferralReward(inviter) {
+  if (!inviter || inviter.telegramid === user.telegramid) return;
+
+  const reward = Number(config.REFERRAL_REWARD) || 1;
+  const inviterBalance = ResLib.anotherUserRes('balance', inviter.telegramid);
+  const inviterEarnings = ResLib.anotherUserRes('referral_earnings', inviter.telegramid);
+
+  inviterBalance.add(reward);
+  inviterEarnings.add(reward);
+
+  smartBot.add({ referral_reward: reward });
+  smartBot.run({
+    command: 'ref:notifyInviter',
+    options: { inviter_id: inviter.telegramid }
+  });
+}
+
+// Update total user count
+function updateTotalUserCount() {
   const totalUsers = Bot.getProp('total_users', 0);
   Bot.setProp({
     name: 'total_users',
@@ -54,3 +48,12 @@ if (chat?.just_created && chat?.chat_type === 'private') {
   });
 }
 
+if (!ensureConfigInitialized()) return;
+
+RefLib.track();
+
+if (chat?.just_created && chat?.chat_type === 'private') {
+  const inviter = RefLib.getAttractedBy();
+  handleReferralReward(inviter);
+  updateTotalUserCount();
+}
