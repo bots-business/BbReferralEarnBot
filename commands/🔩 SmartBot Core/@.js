@@ -61,16 +61,20 @@ function runAccessDenied(){
   });
 }
 
-// Restrict access to admin commands
-if (command?.folder === "🔐 Admin") {
+function grantAdminOrBroadcast() {
   const isBroadcast = command?.name === "/send_broadcast";
   const isAuthorized = user && isAdmin(user.telegramid);
 
-  if (!isBroadcast && !isAuthorized) {
-    runAccessDenied();
-    return
+  if (isBroadcast || isAuthorized) {
+    return true;
   }
 
-  // Admin is authorized — continue with admin commands
+  runAccessDenied();
+  return false;
+}
+
+// Restrict access to admin commands
+if (command?.folder === "🔐 Admin" && !grantAdminOrBroadcast()) {
+  return;
 }
 
