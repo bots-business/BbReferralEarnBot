@@ -4,53 +4,49 @@
   need_reply: false
   auto_retry_time: 
   folder: 🏠 Menu
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
 // Template for each individual withdrawal
-const withdrawalTemplate = "🔹 *Withdrawal #{index}:*\n⏰ *Time:* {time}\n💸 *Amount:* {amount}\n📌 *Status:* {status}";
+const withdrawalTemplate = ({ index, time, amount, status }) => `
+🔹 *Withdrawal #${index}:*
+⏰ *Time:* ${time}
+💸 *Amount:* ${amount}
+📌 *Status:* ${status}
+`;
 
 // Retrieve user-specific withdrawal history
 const history = Bot.getProp("withdraw_history-" + user.telegramid, []);
 
 // If no history, alert user
-if (history.length === 0) {
-  return smartBot.run({
-    command: "/alert",
-    options: {
-      message: smartBot.fill("{noHistoryMessage}")
-    }
-  });
+if (!history.length) {
+  return smartBot.run({ command: "history:noData" });
 }
 
-// Limit to first 10 entries (most recent first)
-const latest = history.slice(0, 10);
+// Limit to the most recent 10 entries
+const latestWithdrawals = history.slice(0, 10);
 
-// Format each withdrawal into a readable string
-const withdrawalsText = latest.map((item, index) => {
-  return withdrawalTemplate
-    .replace("{index}", index + 1)
-    .replace("{time}", new Date(parseInt(item.id.replace("wd_", ""))).toLocaleString())
-    .replace("{amount}", item.amount)
-    .replace("{status}",
-      item.status === "pending" ? "🔄 Pending" :
-      item.status === "approved" ? "✅ Approved" :
-      "❌ Rejected"
-    );
-}).join("\n\n");
+// Format each withdrawal entry
+const withdrawalsText = latestWithdrawals.map((item, index) => {
+  const withdrawalTime = new Date(parseInt(item.id.replace("wd_", "")));
+  const formattedTime = withdrawalTime.toLocaleString();
+
+  const status = item.status === "pending" ? "🔄 Pending" : item.status === "approved" ? "✅ Approved" : "❌ Rejected";
+
+  return withdrawalTemplate({
+    index: index + 1,
+    time: formattedTime,
+    amount: item.amount,
+    status: status
+  });
+}).join("");
 
 // Save final values to use in a message template
 smartBot.add({
-  count: latest.length,
+  count: latestWithdrawals.length,
   withdrawals: withdrawalsText
 });
 

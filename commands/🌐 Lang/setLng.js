@@ -4,14 +4,8 @@
   need_reply: false
   auto_retry_time: 
   folder: 🌐 Lang
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
@@ -29,4 +23,3 @@ smartBot.add({ newLang: newLang });
 smartBot.run({
   command: "/joining"
 });
-

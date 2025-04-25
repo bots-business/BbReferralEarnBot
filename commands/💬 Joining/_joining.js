@@ -4,44 +4,34 @@
   need_reply: false
   auto_retry_time: 
   folder: 💬 Joining
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
-// Get a list of the channels the user hasn't joined yet
+// Get a list of channels the user still needs to join
 const notJoinedChats = Libs.MembershipChecker.getNotJoinedChats();
 
-// Check if the user is a member of all required channels
+// Check if the user is already a member of all required channels
 const isUserMember = Libs.MembershipChecker.isMember();
 
 if (!isUserMember) {
-  // If the user isn't a member, prepare the error message
-  const joinErrorMessage = smartBot.fill("{notJoinedChatsError}");
-
-  if (params === "check") { 
-    // Only check membership if 'params' is 'check'
+  // User hasn't joined all required channels
+  if (params === "check") {
+    // If the user clicked "Check" button, recheck membership
     Libs.MembershipChecker.check();
 
-    // Send a callback query with the error message to alert the user
-    return Api.answerCallbackQuery({
-      callback_query_id: request.id,
-      text: joinErrorMessage,
-      show_alert: true
+    // Show an alert message explaining the issue
+    return smartBot.run({
+      command: "join:checkFailed"
     });
   }
 
-  // Store the list of not joined chats in the bot's data for future reference
+  // Save the list of not joined channels for later use in message templates
   smartBot.add({ notJoinedChats });
 } else {
-  // If the user is a member, proceed to the main menu
+  // User has joined all channels — continue to main menu
   return smartBot.run({
     command: "/menu edit"
   });

@@ -4,41 +4,31 @@
   need_reply: false
   auto_retry_time: 
   folder: 💸 Withdraw
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
-let parts = params.split(" ");
-let approved = parts[0] === "true";
-let userId = parts[1];
-let withdrawId = parts[2];
+// Parse input params: [approved, userId, withdrawId]
+const [approvedFlag, userId, withdrawId] = params.split(" ");
+const approved = approvedFlag === "true";
 
-// Check if the current user is an admin
+// Only admins are allowed to perform this action
 if (!isAdmin(user.telegramid)) {
   return smartBot.run({
-    command: "/alert",
-    options: {
-      message: smartBot.fill("{notAdminMessage}")
-    }
+    command: "admin:alertAccessDenied"
   });
 }
 
-// Retrieve withdrawal history for the target user
-let history = Bot.getProp("withdraw_history-" + userId) || [];
+// Retrieve the user's withdrawal history
+let history = Bot.getProp("withdraw_history-" + userId, []);
 
-// Find the specific withdrawal record by ID
+// Find the specific withdrawal entry by ID
 let record = history.find(r => r.id === withdrawId);
-if (!record) return; // No matching record — bail out
+if (!record) return; // Nothing to process if not found
 
-// Update the withdrawal status based on admin action
+// Update the record status
 record.status = approved ? "approved" : "rejected";
 
 // Save the updated history
@@ -48,52 +38,47 @@ Bot.setProp({
   type: "json"
 });
 
-let amount = record.amount;
-let statusMessage = approved ? "✅ Approved" : "❌ Rejected";
-let time = new Date().toLocaleString();
+// Handle the user's balances
+const amount = record.amount;
+const userBalance = Libs.ResourcesLib.anotherUserRes("balance", userId);
+const userPending = Libs.ResourcesLib.anotherUserRes("pending_balance", userId);
 
-// Load the target user's balances using anotherUserRes
-let userBalance = Libs.ResourcesLib.anotherUserRes("balance", userId);
-let userPendingBalance = Libs.ResourcesLib.anotherUserRes("pending_balance", userId);
+// Always deduct from pending balance
+userPending.remove(amount);
 
-// Always remove the amount from the pending balance
-userPendingBalance.remove(amount);
-
-// If rejected, refund the user by adding it back to their balance
+// If rejected, refund the amount back to balance
 if (!approved) {
   userBalance.add(amount);
 }
 
-// Set context for message placeholders
+// Set values for template rendering
 smartBot.add({
   userId,
   amount,
-  status: statusMessage,
-  time
+  status: approved ? "✅ Approved" : "❌ Rejected",
+  time: new Date().toLocaleString()
 });
 
-// Notify the user
+// Notify the user about the decision
 smartBot.run({
-  command: "/sendMessage",
+  command: "withdraw:notifyUser",
   options: {
-    tgid: userId,
-    message: smartBot.fill("{userWithdrawNotification}")
+    user_telegramid: userId
   }
 });
 
-// Confirm to the admin
+// Confirm the action to the admin
 smartBot.run({
   command: "admin:withdrawResponse"
 });
 
-// Send public announcement only if approved
-let announcementChannel = config.ANNOUNCEMENT_CHANNEL;
+// If approved and a public channel is configured, send announcement
+const announcementChannel = config.ANNOUNCEMENT_CHANNEL;
 if (approved && announcementChannel) {
   smartBot.run({
-    command: "/sendMessage",
+    command: "withdraw:postAnnouncement",
     options: {
-      tgid: announcementChannel,
-      message: smartBot.fill("{announcementTemplate}")
+      channel_id: announcementChannel
     }
   });
 }

@@ -4,20 +4,15 @@
   need_reply: false
   auto_retry_time: 
   folder: 💸 Withdraw
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
 // Wallet address is already defined in the "@" command, so we check if it's missing
-if (!wallet_address) {
+
+if (!walletAddress) {
   return smartBot.run({
     command: "/manage_wallet"
   });

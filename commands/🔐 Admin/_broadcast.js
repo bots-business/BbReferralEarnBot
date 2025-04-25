@@ -4,35 +4,30 @@
   need_reply: false
   auto_retry_time: 
   folder: 🔐 Admin
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
-// Admin check has already been done in the master command (`@`), so no need to repeat here.
+// Admin check is already handled in the master command (@), no need to check again here
 
-// Check if the message is a reply and if the message ID and chat ID are valid
+// Extract message and chat details from the replied message
 const message_id = request?.reply_to_message?.message_id;
 const chat_id = request?.reply_to_message?.chat?.id;
 
 if (!message_id || !chat_id) {
-  // Return a message to the admin if no reply was provided
+  // If the admin didn't reply to a message, show a clear instruction
   return smartBot.run({
     command: "/sendMessage",
     options: {
-      tgid: user?.telegramid,
-      message: "⚠️ Please reply to a message in order to broadcast."
+      tgid: user.telegramid,
+      message: "⚠️ Please reply to a message you want to broadcast to users."
     }
   });
 }
 
+// Trigger broadcast to all private chats
 Bot.runAll({
   command: "/send_broadcast",
   for_chats: "private-chats",
@@ -42,3 +37,4 @@ Bot.runAll({
     message_id
   }
 });
+

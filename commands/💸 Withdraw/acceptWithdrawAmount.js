@@ -4,32 +4,27 @@
   need_reply: true
   auto_retry_time: 
   folder: 💸 Withdraw
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
-// If no message is provided, we don't need to do anything
+// Exit if no message is provided
 if (!message) return;
 
 // Clean up the chat by deleting the user's message
 Api.deleteMessage({ message_id: request.message_id });
 
-// If the user typed "/cancel", take them to the cancel menu
+// If the user typed "/cancel", direct them to the cancel menu
 if (message === '/cancel') {
-  return smartBot.run({ command: "/cancel" });
+  return smartBot.run({ command: '/cancel' });
 }
 
-// Get user's withdrawal history (saved globally by user ID)
-let history = Bot.getProp("withdraw_history-" + user.telegramid) || [];
+// Load user's withdrawal history or initialize it
+let history = Bot.getProp("withdraw_history-" + user.telegramid, []);
 
+// Setup the SmartAmountDialog for input validation
 let smartAmountDialog = new SmartAmountDialog({
   min: config.MIN_WITHDRAWAL || 10,
   max: config.MAX_WITHDRAWAL || 100,
@@ -40,43 +35,43 @@ let smartAmountDialog = new SmartAmountDialog({
   dialogErrors: smartBot.curCommand.dialogErrors
 });
 
-const isValidAmonut = smartAmountDialog.accept(message);
+// Validate the user's input
+const isValidAmount = smartAmountDialog.accept(message);
 
-// Store basic values for later use
+// Store amount and minimum withdrawal limit for future use in message templates
 smartBot.add({
   amount: message,
   minimum_withdraw: config.MIN_WITHDRAWAL || 10
 });
 
-if (isValidAmonut !== true) {
-  // If amount is invalid, show appropriate error
-  smartBot.run({
+if (isValidAmount !== true) {
+  // This is expected to be pre-filled with SmartBot dialog errors,
+  // but currently isn't, so i manually call smartBot.fill().
+  // This is a known issue and will be reported as a bug.
+  return smartBot.run({
     command: "/editMessage",
     options: {
-      message: smartBot.fill(isValidAmonut)
+      message: smartBot.fill(isValidAmount)
     }
   });
-  return;
 }
 
-// Deduct from balance and add to pending balance
-balance.remove(smartAmountDialog.amount);
-pendingBalance.add(smartAmountDialog.amount);
+// Process the withdrawal: deduct from balance, add to pending
+const withdrawalAmount = smartAmountDialog.amount;
+balance.remove(withdrawalAmount);
+pendingBalance.add(withdrawalAmount);
 
-// Generate unique withdrawal ID using timestamp
-let withdrawId = "wd_" + new Date().getTime();
+// Create a unique withdrawal ID
+const withdrawId = "wd_" + Date.now();
 
-// Create new withdrawal record
-let record = {
+// Add the new record to user's withdrawal history
+const newRecord = {
   id: withdrawId,
-  amount: smartAmountDialog.amount,
+  amount: withdrawalAmount,
   status: "pending"
 };
 
-// Add new record to top of withdrawal history
-history.unshift(record);
-
-// Save updated withdrawal history globally (using user ID key)
+history.unshift(newRecord); // Add to top
 Bot.setProp({
   name: "withdraw_history-" + user.telegramid,
   value: history,

@@ -4,14 +4,8 @@
   need_reply: false
   auto_retry_time: 
   folder: 🌐 Lang
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
@@ -31,6 +25,9 @@ const LANG = {
       "text": "🔔 *Unirse a los Canales Requeridos*\n\nPara seguir usando el bot, asegúrate de haberte unido a todos los canales listados abajo:\n\n{notJoinedChats}",
       "inline_buttons": [[{ "text": "✅ Ya me uní – Continuar", "command": "/joining check" }]]
     },
+    "join:checkFailed": {
+      "alert": "⚠️ Por favor únete a todos los canales requeridos para continuar.\n\nEspera unos segundos después de unirte y vuelve a intentarlo."
+    },
     "/menu": {
       "edit": true,
       "text": "🎉 *¡Bienvenido a Nuestro Bot de Referencias!* \n\n¡Comienza a ganar {currency} refiriendo amigos y desbloqueando recompensas! 🚀\n\nSelecciona una opción abajo para seguir tus ganancias, reclamar bonificaciones y hacer crecer tus recompensas! 💰",
@@ -41,15 +38,24 @@ const LANG = {
       "text": "💰 *Tu saldo de billetera*\n\n🔹 Saldo Total: *{balance} {currency}*\n✅ Disponible para Retiro: *{available_balance} {currency}*\n⏳ Retiro Pendiente: *{pending_balance} {currency}*\n\n🚀 ¡Invita amigos y observa crecer tu saldo!",
       "inline_buttons": "#/keyboard/userMenu"
     },
-    "/claim_bonus": {
+    "bonus:received": {
       "edit": true,
-      "text": "{bonusText}",
+      "text": "🎉 *¡Felicidades! ¡Bono recibido!*\n\n💸 Has ganado *{bonus} {currency}* solo por participar!\n⏰ Próximo bono en *{interval} horas*.\n\n👥 ¡Invita a tus amigos y gana más, así de fácil!",
+      "inline_buttons": "#/keyboard/userMenu"
+    },
+    "bonus:alreadyClaimed": {
+      "edit": true,
+      "text": "⏳ *¡Bono ya reclamado!*\n\n🕒 Necesitas esperar *{remaining} horas* antes de poder reclamar nuevamente.\n\n📢 ¡No te quedes esperando — comparte tu enlace de referido y sigue ganando!",
       "inline_buttons": "#/keyboard/userMenu"
     },
     "/referral_info": {
       "edit": true,
       "text": "👥 *Tus estadísticas de referidos*\n\n🔗 *Tu enlace:* `{referral_link}`\n\n👤 *Total de referidos:* {referral_count}\n💰 *Ganancias por referidos:* {referral_earnings} {currency}\n\n🎉 *¡Gana {referral_bonus} {currency}* por cada usuario que se registre usando tu enlace de referido!\n\n📢 ¡Comparte tu enlace y sigue ganando!",
       "inline_buttons": "#/keyboard/userMenu"
+    },
+    "ref:notifyInviter": {
+      "chat_id": "{inviter_id}",
+      "text": "🎉 *¡Nuevo referido!*\n\n¡Tu amigo acaba de unirse y has ganado *{referral_reward}* {currency}!"
     },
     "/manage_wallet": {
       "edit": true,
@@ -124,13 +130,35 @@ const LANG = {
     },
     "/history": {
       "edit": true,
-      "text": "*📝 Tus últimos {count} retiros:*\n\n{withdrawals}\n\n✨ _Si necesitas ayuda, no dudes en preguntar!_",
+      "text": "*📝 Tus últimos {count} retiros:*\n{withdrawals}\n✨ _Si necesitas ayuda, no dudes en preguntar!_",
       "inline_buttons": "#/keyboard/backToMenu"
+    },
+    "history:noData": {
+      "alert": "⚠️ ¡No tienes historial de retiros aún! \n\nAún no has realizado ningún retiro. Una vez que lo hagas, tu historial aparecerá aquí."
     },
     "/withdraw": {
       "edit": true,
       "text": "💸 *Solicitud de Retiro*\n\n🧾 *Tu saldo:* {balance} {currency}\n\nPor favor ingresa el monto que te gustaría retirar a continuación.\n\nSi cambias de opinión, solo haz clic en /cancel.",
       "run": { "command": "acceptWithdrawAmount" }
+    },
+    "withdraw:notifyUser": {
+      "chat_id": "{user_telegramid}",
+      "text": "👋 ¡Hola! Tu solicitud de retiro de *{amount} {currency}* ha sido {status}. 💸"
+    },
+    "withdraw:postAnnouncement": {
+      "chat_id": "{channel_id}",
+      "text": "📢 *¡Retiro procesado!* \n\n👤 *ID de usuario:* {userId}\n💵 *Monto:* {amount} {currency}\n⏱ *Hora:* {time}"
+    },
+    "admin:accessDenied": {
+      "chat_id": "{user_telegramid}",
+      "text": "#/adminOnlyError"
+    },
+    "admin:alertAccessDenied": {
+      "alert": "#/adminOnlyError"
+    },
+    "admin:supportRequest": {
+      "chat_id": "{admin_telegramid}",
+      "text": "📬 *Nueva solicitud de soporte*\n\n👤 *ID de usuario:* {user_id}\n\n📝 *Mensaje:* {support_message}"
     },
     "admin:withdrawRequest": {
       "chat_id": "{admin_channel}",
@@ -163,18 +191,10 @@ const LANG = {
     }
   },
   "titles": {
-    "curLang": currentLang,
-    "notJoinedChatsError": "⚠️ Por favor únete a todos los canales requeridos para continuar.\n\nEspera unos segundos después de unirte y vuelve a intentarlo.",
-    "bonusReceived": "🎉 *¡Felicidades! ¡Bono recibido!*\n\n💸 Has ganado *{bonus} {currency}* solo por participar!\n⏰ Próximo bono en *{interval} horas*.\n\n👥 ¡Invita a tus amigos y gana más, así de fácil!",
-    "bonusAlreadyClaimed": "⏳ *¡Bono ya reclamado!*\n\n🕒 Necesitas esperar *{remaining} horas* antes de poder reclamar nuevamente.\n\n📢 ¡No te quedes esperando — comparte tu enlace de referido y sigue ganando!",
-    "adminMessage": "📬 *Nueva solicitud de soporte*\n\n👤 *ID de usuario:* {user_id}\n\n📝 *Mensaje:* {message}",
-    "noHistoryMessage": "⚠️ ¡No tienes historial de retiros aún! \n\nAún no has realizado ningún retiro. Una vez que lo hagas, tu historial aparecerá aquí.",
-    "notAdminMessage": "⛔ ¡Acceso denegado!\n\nEsta acción está restringida solo a administradores.",
-    "userWithdrawNotification": "👋 ¡Hola! Tu solicitud de retiro de *{amount} {currency}* ha sido {status}. 💸",
-    "announcementTemplate": "📢 *¡Retiro procesado!* \n\n👤 *ID de usuario:* {userId}\n💵 *Monto:* {amount} {currency}\n⏱ *Hora:* {time}",
-    "newReferralMessage": "🎉 *¡Nuevo referido!*\n\n¡Tu amigo acaba de unirse y has ganado *{reward}* {currency}!"
+    "curLang": currentLang
   },
   "types": {
+    "adminOnlyError": "⛔ ¡Acceso denegado!\n\nEsta acción está restringida solo a administradores.",
     "button": {
       "cancel": "❌ Cancelar"
     },
@@ -213,4 +233,3 @@ const LANG = {
 
 // Configurar idioma para el bot
 smartBot.setupLng("es", LANG);
-

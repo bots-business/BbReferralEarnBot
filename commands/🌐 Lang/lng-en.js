@@ -4,14 +4,8 @@
   need_reply: false
   auto_retry_time: 
   folder: 🌐 Lang
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
@@ -31,6 +25,9 @@ const LANG = {
       "text": "🔔 *Join Required Channels*\n\nTo continue using the bot, please make sure you've joined all the channels listed below:\n\n{notJoinedChats}",
       "inline_buttons": [[{ "text": "✅ I've Joined – Continue", "command": "/joining check" }]]
     },
+    "join:checkFailed": {
+      "alert": "⚠️ Please join all required channels to continue.\n\nWait a few seconds after joining, then try again."
+    },
     "/menu": {
       "edit": true,
       "text": "🎉 *Welcome to Our Referral Bot!* \n\nStart earning {currency} by referring friends and unlocking rewards! 🚀\n\nSelect an option below to track your earnings, claim bonuses, and grow your rewards! 💰",
@@ -41,15 +38,24 @@ const LANG = {
       "text": "💰 *Your Wallet Balance*\n\n🔹 Total Balance: *{balance} {currency}*\n✅ Available for Withdrawal: *{available_balance} {currency}*\n⏳ Pending Withdrawal: *{pending_balance} {currency}*\n\n🚀 Invite friends and watch your balance grow!",
       "inline_buttons": "#/keyboard/userMenu"
     },
-    "/claim_bonus": {
+    "bonus:received": {
       "edit": true,
-      "text": "{bonusText}",
+      "text": "🎉 *Congrats! Bonus Received!*\n\n💸 You’ve earned *{bonus} {currency}* just for showing up!\n⏰ Next bonus in *{interval} hours*.\n\n👥 Invite friends, earn more — it’s that simple!",
+      "inline_buttons": "#/keyboard/userMenu"
+    },
+    "bonus:alreadyClaimed": {
+      "edit": true,
+      "text": "⏳ *Bonus Already Claimed!*\n\n🕒 You need to wait *{remaining} hours* before claiming again.\n\n📢 Don’t wait idle — share your referral link and keep earning!",
       "inline_buttons": "#/keyboard/userMenu"
     },
     "/referral_info": {
       "edit": true,
       "text": "👥 *Your Referral Stats*\n\n🔗 *Your Link:* `{referral_link}`\n\n👤 *Total Referrals:* {referral_count}\n💰 *Earnings from Referrals:* {referral_earnings} {currency}\n\n🎉 *Earn {referral_bonus} {currency}* for each user who joins using your referral link!\n\n📢 Share your link and keep earning!",
       "inline_buttons": "#/keyboard/userMenu"
+    },
+    "ref:notifyInviter": {
+      "chat_id": "{inviter_id}",
+      "text": "🎉 *New Referral!*\n\nYour friend just joined and you've earned *{referral_reward}* {currency}!"
     },
     "/manage_wallet": {
       "edit": true,
@@ -124,13 +130,35 @@ const LANG = {
     },
     "/history": {
       "edit": true,
-      "text": "*📝 Your Last {count} Withdrawals:*\n\n{withdrawals}\n\n✨ _If you need any help, feel free to ask!_",
+      "text": "*📝 Your Last {count} Withdrawals:*\n{withdrawals}\n✨ _If you need any help, feel free to ask!_",
       "inline_buttons": "#/keyboard/backToMenu"
+    },
+    "history:noData": {
+      "alert": "⚠️ No Withdrawal History Yet! \n\nYou haven’t made any withdrawals yet. Once you do, your history will appear here."
     },
     "/withdraw": {
       "edit": true,
       "text": "💸 *Withdrawal Request*\n\n🧾 *Your Balance:* {balance} {currency}\n\nPlease enter the amount you'd like to withdraw below.\n\nIf you change your mind, just tap /cancel.",
       "run": { "command": "acceptWithdrawAmount" }
+    },
+    "withdraw:notifyUser": {
+      "chat_id": "{user_telegramid}",
+      "text": "👋 Hello! Your withdrawal request of *{amount} {currency}* has been {status}. 💸"
+    },
+    "withdraw:postAnnouncement": {
+      "chat_id": "{channel_id}",
+      "text": "📢 *Withdrawal Processed!* \n\n👤 *User ID:* {userId}\n💵 *Amount:* {amount} {currency}\n⏱ *Time:* {time}"
+    },
+    "admin:accessDenied": {
+      "chat_id": "{user_telegramid}",
+      "text": "#/adminOnlyError"
+    },
+    "admin:alertAccessDenied": {
+      "alert": "#/adminOnlyError"
+    },
+    "admin:supportRequest": {
+      "chat_id": "{admin_telegramid}",
+      "text": "📬 *New Support Request*\n\n👤 *User ID:* {user_id}\n\n📝 *Message:* {support_message}"
     },
     "admin:withdrawRequest": {
       "chat_id": "{admin_channel}",
@@ -163,18 +191,10 @@ const LANG = {
     }
   },
   "titles": {
-    "curLang": currentLang,
-    "notJoinedChatsError": "⚠️ Please join all required channels to continue.\n\nWait a few seconds after joining, then try again.",
-    "bonusReceived": "🎉 *Congrats! Bonus Received!*\n\n💸 You’ve earned *{bonus} {currency}* just for showing up!\n⏰ Next bonus in *{interval} hours*.\n\n👥 Invite friends, earn more — it’s that simple!",
-    "bonusAlreadyClaimed": "⏳ *Bonus Already Claimed!*\n\n🕒 You need to wait *{remaining} hours* before claiming again.\n\n📢 Don’t wait idle — share your referral link and keep earning!",
-    "adminMessage": "📬 *New Support Request*\n\n👤 *User ID:* {user_id}\n\n📝 *Message:* {message}",
-    "noHistoryMessage": "⚠️ No Withdrawal History Yet! \n\nYou haven’t made any withdrawals yet. Once you do, your history will appear here.",
-    "notAdminMessage": "⛔ Access Denied!\n\nThis action is restricted to administrators only.",
-    "userWithdrawNotification": "👋 Hello! Your withdrawal request of *{amount} {currency}* has been {status}. 💸",
-    "announcementTemplate": "📢 *Withdrawal Processed!* \n\n👤 *User ID:* {userId}\n💵 *Amount:* {amount} {currency}\n⏱ *Time:* {time}",
-    "newReferralMessage": "🎉 *New Referral!*\n\nYour friend just joined and you've earned *{reward}* {currency}!"
+    "curLang": currentLang
   },
   "types": {
+    "adminOnlyError": "⛔ Access Denied!\n\nThis action is restricted to administrators only.",
     "button": {
       "cancel": "❌ Cancel"
     },
@@ -213,4 +233,3 @@ const LANG = {
 
 // Setup language for the bot
 smartBot.setupLng("en", LANG);
-

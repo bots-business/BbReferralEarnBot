@@ -4,39 +4,35 @@
   need_reply: false
   auto_retry_time: 
   folder: 🔐 Admin
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
-// Admin check has already been done in the master command (`@`), so no need to repeat here.
+// Admin validation is already handled in the master command (@), no need to check again here
 
-// Split the command parameters to extract the target user ID
-const parts = params.split(" ");
-const targetId = parts[0];
+// Directly extract the Telegram ID from the params
+const banUserId = params;
 
+// Default response to the command issuer (admin)
 let response;
-const tgid = user?.telegramid;
+const adminId = user?.telegramid;
 
-if (!targetId) {
+if (!banUserId) {
+  // Show usage help if no ID provided
   response = "⚠️ Please provide a Telegram ID to ban.\n\nExample:\n`/ban 123456789`";
 } else {
-  // Block the chat for the target user
-  Bot.blockChat(targetId);
-  response = `🚫 User \`${targetId}\` has been *banned* and blocked from chatting.`;
+  // Ban the user by blocking their chat
+  Bot.blockChat(banUserId);
+  response = `🚫 User has been *banned* and blocked from chatting.`;
 }
 
+// Send the result message to the admin
 smartBot.run({
   command: "/sendMessage",
   options: {
-    tgid,
+    tgid: adminId,
     message: response
   }
 });
