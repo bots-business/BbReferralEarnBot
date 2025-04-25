@@ -4,71 +4,68 @@
   need_reply: false
   auto_retry_time: 
   folder: 🔩 SmartBot Core
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
-// Fetch configuration from admin panel
+// Load configuration from the admin panel
 const config = AdminPanel.getPanelValues('configuration');
 
 // Default user-related values
 let balance = null;
 let pendingBalance = null;
-let wallet_address = null;
-let available_balance = 0;
+let walletAddress = null;
+let availableBalance = 0;
 
-// Load user-specific values only if user exists
+// Load values only if user exists
 if (user) {
   balance = Libs.ResourcesLib.userRes('balance');
   pendingBalance = Libs.ResourcesLib.userRes('pending_balance');
-  wallet_address = User.getProp('wallet_address');
-  available_balance = balance.value();
+  walletAddress = User.getProp('wallet_address');
+  availableBalance = balance.value();
 }
 
 // Prepare SmartBot parameters
-let smartBotParams = {
+const smartBotParams = {
   currency: config?.CURRENCY,
   ...(user && {
     balance: balance.value(),
     pending_balance: pendingBalance.value(),
-    available_balance,
-    wallet_address: wallet_address || "Not set"
+    available_balance: availableBalance,
+    wallet_address: walletAddress || "Not set"
   })
 };
 
-// Initialize SmartBot
+// Initialize SmartBot instance
 let smartBot = new SmartBot({
   debug: false,
   params: smartBotParams
 });
 
-// Admin check
+// Check if a Telegram ID belongs to an admin
 function isAdmin(telegramId) {
-  let admins = (config.ADMIN_IDS || "")
+  const admins = (config.ADMIN_IDS || "")
     .split(",")
     .map(id => id.trim());
   return admins.includes(String(telegramId));
 }
 
-// Restrict access to Admin folder
+// Restrict access to admin commands
 if (command?.folder === "🔐 Admin") {
-  if (command?.name !== "/send_broadcast" && (!user || !isAdmin(user.telegramid))) {
+  const isBroadcast = command?.name === "/send_broadcast";
+  const isAuthorized = user && isAdmin(user.telegramid);
+
+  if (!isBroadcast && !isAuthorized) {
     return smartBot.run({
-      command: "/sendMessage",
+      command: 'admin:accessDenied',
       options: {
-        tgid: user?.telegramid,
-        message: smartBot.fill("{notAdminMessage}")
+        user_telegramid: user?.telegramid
       }
     });
   }
-  // User is authorized — allow admin commands
+
+  // Admin is authorized — continue with admin commands
 }
 

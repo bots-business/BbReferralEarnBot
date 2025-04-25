@@ -4,14 +4,8 @@
   need_reply: false
   auto_retry_time: 
   folder: ⚙️ Setup
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
@@ -120,4 +114,3 @@ Libs.MembershipChecker.setup();
 
 // Final setup message
 Bot.sendMessage("✅ Setup panel created successfully.\n\n⚠️ Please go to the Bots.Business app and configure the Admin Panel *before using the bot* to avoid any errors.");
-

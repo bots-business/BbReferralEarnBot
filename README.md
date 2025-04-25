@@ -1,150 +1,84 @@
-# BbReferralEarnBot
+# BbReferralEarnBot - chat bot
+It is repository for chat bot: [@BbReferralEarnBot](https://t.me/BbReferralEarnBot)
 
-**BbReferralEarnBot** is a flexible and powerful referral-based Telegram bot, built on the intuitive **SmartBot architecture** and fully compatible with the [Bots.Business](https://bots.business) platform. It lets users earn by inviting others, track rewards, claim bonuses, and request withdrawals—all within Telegram. 🎉
+## What it is?
+This repository can be imported to [Bots.Business](https://bots.business) as a worked chat bot.
 
-Admins enjoy full control via an integrated dashboard with no coding required. ⚙️
+[Bots.Business](https://bots.business) - it is probably the first CBPaaS - Chat Bot Platform as a Service.
 
----
+A CBPaaS is a cloud-based platform that enables developers to create chatbots without needing to build backend infrastructure.
 
-## Table of Contents 📑
+## Create your own bot for Telegram from this Git repo
 
-- [About BbReferralEarnBot](#about-bbreferralearnbot)  
-- [Key Features](#key-features)  
-  - [User Tools](#user-tools)  
-  - [Admin Tools](#admin-tools)  
-- [SmartBot Architecture](#smartbot-architecture)  
-- [Getting Started (Bots.Business)](#getting-started-botsbusiness)  
-- [Live Demo](#live-demo)  
-- [Screenshots](#screenshots)  
-- [License](#license)  
-- [Support](#support)
+How to create bot?
+1. Create bot with [@BotFather](https://telegram.me/BotFather) and take Secret Token
+2. Create bot in App and add Secret Token
+3. Add Public Key from App as [Deploy key](https://developer.github.com/v3/guides/managing-deploy-keys/#deploy-keys) with read access (and write access for bot exporting if you need it)
+4. Do import for this git repo
 
----
+Now you can talk with yours new Telegram Bot
 
-## About BbReferralEarnBot 🎯
+See [more](https://help.bots.business/getting-started)
 
-Whether you're launching an affiliate program, running a community campaign, or simply want to grow your Telegram user base, **BbReferralEarnBot** helps automate your referral rewards system. 💪
+## Commands - in commands folder
+File name - it is command name (Bot it can be rewritten in command description)
 
-Built using the **SmartBot architecture**, it’s both developer-friendly and admin-ready—designed for customization without writing code. 🔧
+Command can have: `name`, `help`, `aliases` (second names), `answer`, `keyboard`, `scnarios` (for simple logic) and other options.
 
-> Everything from language to logic is configurable. Just install, set up, and go. 🚀
+### Command description
+It is file header:
 
----
+    /*CMD
+      command: /test
+      help: this is help for ccommand
+      need_reply: [ true or false here ]
+      auto_retry_time: [ time in sec ]
+      answer: it is example answer for /test command
+      keyboard: button1, button2
+      aliases: /test2, /test3
+    CMD*/
 
-## Key Features ⭐
+See [more](https://help.bots.business/commands)
 
-### User Tools 🧑‍💻
+### Command body
+It is command code in JavaScript.
+Use Bot Java Script for logic in command.
 
-- **Referral Link Generator** 🔗  
-  Every user gets a unique referral link to share with friends.
+For example:
+> Bot.sendMessage(2+2);
 
-- **Referral Dashboard** 📊  
-  Track invites, rewards, claim bonuses, and monitor your earnings.
+See [more](https://help.bots.business/scenarios-and-bjs)
 
-- **Wallet Management** 💸  
-  View current balance, pending rewards, and withdrawal history.
 
-- **Bonus System** 🎁  
-  Periodic bonus claims to increase user retention.
+## Libraries - in libs folder
+You can store common code in the libs folder. File name - it is library name.
 
-- **Multilingual Interface** 🌍  
-  Instantly switch the interface language anytime.
+For example code in myLib.js:
 
-- **Interactive Navigation** ⌨️  
-  Menus built with inline buttons and smart keyboards for ease of use.
+    function hello(){ Bot.sendMessage("Hello from lib!") }
+    function goodbye(name){ Bot.sendMessage("Goodbye, " + name) }
 
----
+    publish({
+      sayHello: hello,
+      sayGoodbyeTo: goodbye
+    })
 
-### Admin Tools 🔧
+then you can run in any bot's command:
 
-- **Referral Rules Configuration** 🏅  
-  Control how referrals are counted and when rewards are credited.
+    Libs.myLib.hello()
+    Libs.myLib.sayGoodbyeTo("Alice")
 
-- **User Management** 👨‍💻  
-  Ban/unban users, reset stats, and check referral trees.
+See [more](https://help.bots.business/git/library)
 
-- **Channel Join Verification** 📲  
-  Set mandatory channels users must join to qualify for rewards.
+## Other bots example
+See other bots examples in the [github](https://github.com/bots-business?utf8=✓&tab=repositories&q=&type=public&language=javascript) or in the [Bot Store](https://bots.business/)
 
-- **Withdraw Request System** 💰  
-  View and approve/deny withdrawal requests from the dashboard.
 
-- **Broadcast Messaging** 📢  
-  Instantly send messages or updates to all users.
+## Other help
+[Help.bots.business](https://help.bots.business)
 
-- **Analytics Dashboard** 📈  
-  Get insight into user growth, engagement, and top referrers.
+## API
+See [API](https://api.bots.business/docs#/docs/summary)
 
----
 
-## SmartBot Architecture 🔧
-
-BbReferralEarnBot is built on **SmartBot**, a highly configurable bot engine designed to maximize flexibility and eliminate the need for custom code. 🧩
-
-- **Configuration-Based Setup** 📝 – Modify commands, messages, buttons, and logic via config files.
-- **Multilingual Ready** 🌐 – Add as many languages as you like and let users switch on the fly.
-- **Extendable** 🔌 – Drop in new features without touching core logic.
-- **Fully UI-Driven** 🎨 – Beautiful inline buttons and keyboard controls built-in.
-
----
-
-## Getting Started (Bots.Business) 🏁
-
-> BbReferralEarnBot is designed to run seamlessly on the **Bots.Business** platform. 💻
-
-### Quick Setup ⚙️:
-
-1. **Install from Bots.Business Store** 🛒  
-   Visit the [Bots.Business Store](https://bots.business/store), search for **BbReferralEarnBot**, and click **Install**.
-
-2. **Run Setup Command** 📝  
-   Open your bot and type:  
-   ```
-   /setup
-   ```
-
-3. **Complete Admin Panel Configuration** 🔧  
-   - Add your required join channels  
-   - Set referral bonus amounts  
-   - Configure wallet/withdrawal settings  
-   - Customize language and menus
-
-> No coding or server hosting required—everything is done from your BB dashboard. 📊
-
----
-
-## Live Demo 🎥
-
-Want to see the bot in action? Try it out now:
-
-[**Live Demo:** @BbReferralEarnBot](https://t.me/BbReferralEarnBot)
-
-> Interact with the real bot, explore all user features, and see how clean and fast the experience is. 🚀
-
----
-
-## Screenshots 📸
-
-### Main Menu 🏠  
-![Main Menu](https://i.ibb.co/HfvZs8ZC/main-menu2.png)
-
-### Referral Stats 📊  
-![Referral Stats](https://i.ibb.co/mFbg2Jjs/referral1.png)
-
-### Wallet & Withdrawals 💳  
-![Wallet UI](https://i.ibb.co/J0snZMH/withdraw3.png)
-
-### Bonus Claim 🎁  
-![Bonus System](https://i.ibb.co/V0PV3VY4/bonus2.png)
-
----
-
-## License 📝
-
-BbReferralEarnBot is licensed under the **MIT License**.  
-
-## References 📚
-
-- [SmartBot Overview - Bots.Business](https://help.bots.business/smart-bot/overview)  
-- [Referral Library - Bots.Business](https://help.bots.business/libs/refferallib)  
-- [MCL Library - Bots.Business](https://help.bots.business/libs/mcl)  
+![](https://bots.business/images/web-logo.png)

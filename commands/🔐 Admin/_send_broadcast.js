@@ -4,14 +4,8 @@
   need_reply: false
   auto_retry_time: 
   folder: 🔐 Admin
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
@@ -24,4 +18,3 @@ Api.copyMessage({
   from_chat_id: options.chat_id,
   message_id: options.message_id
 });
-

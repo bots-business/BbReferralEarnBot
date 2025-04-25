@@ -4,27 +4,25 @@
   need_reply: false
   auto_retry_time: 
   folder: 🏠 Menu
-
-  <<ANSWER
-
-  ANSWER
-
-  <<KEYBOARD
-
-  KEYBOARD
+  answer: 
+  keyboard: 
   aliases: 
   group: 
 CMD*/
 
+// Generate the user's unique referral link
 const referralLink = RefLib.getLink();
+
+// Retrieve referral stats
 const referralEarnings = Libs.ResourcesLib.userRes('referral_earnings').value();
 const referralCount = RefLib.getRefCount();
-const referralBonus = parseInt(config.REFERRAL_REWARD) || 10; // bonus for each referral
+const referralBonus = Number(config.REFERRAL_REWARD) || 10;
 
+// Prepare referral data for SmartBot
 smartBot.add({
   referral_link: referralLink,
-  referral_count: String(referralCount),
-  referral_earnings: String(referralEarnings),
+  referral_count: referralCount.toString(),
+  referral_earnings: referralEarnings.toString(),
   referral_bonus: referralBonus
 });
 
