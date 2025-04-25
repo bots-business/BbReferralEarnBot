@@ -40,8 +40,8 @@ Bot.setProp({
 
 // Handle the user's balances
 const amount = record.amount;
-const userBalance = Libs.ResourcesLib.anotherUserRes("balance", userId);
-const userPending = Libs.ResourcesLib.anotherUserRes("pending_balance", userId);
+const userBalance = ResLib.anotherUserRes("balance", userId);
+const userPending = ResLib.anotherUserRes("pending_balance", userId);
 
 // Always deduct from pending balance
 userPending.remove(amount);

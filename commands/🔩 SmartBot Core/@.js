@@ -21,8 +21,8 @@ let availableBalance = 0;
 
 // Load values only if user exists
 if (user) {
-  balance = Libs.ResourcesLib.userRes('balance');
-  pendingBalance = Libs.ResourcesLib.userRes('pending_balance');
+  balance = ResLib.userRes('balance');
+  pendingBalance = ResLib.userRes('pending_balance');
   walletAddress = User.getProp('wallet_address');
   availableBalance = balance.value();
 }

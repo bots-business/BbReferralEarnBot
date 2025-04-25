@@ -28,8 +28,8 @@ if (chat?.just_created && chat?.chat_type === 'private') {
   if (inviter && inviter.telegramid !== user.telegramid) {
     const reward = Number(config.REFERRAL_REWARD) || 1;
 
-    const inviterBalance = Libs.ResourcesLib.anotherUserRes('balance', inviter.telegramid);
-    const inviterEarnings = Libs.ResourcesLib.anotherUserRes('referral_earnings', inviter.telegramid);
+    const inviterBalance = ResLib.anotherUserRes('balance', inviter.telegramid);
+    const inviterEarnings = ResLib.anotherUserRes('referral_earnings', inviter.telegramid);
 
     // Apply referral reward to inviter's balance and earnings
     inviterBalance.add(reward);

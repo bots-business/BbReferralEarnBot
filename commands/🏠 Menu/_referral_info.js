@@ -14,7 +14,7 @@ CMD*/
 const referralLink = RefLib.getLink();
 
 // Retrieve referral stats
-const referralEarnings = Libs.ResourcesLib.userRes('referral_earnings').value();
+const referralEarnings = ResLib.userRes('referral_earnings').value();
 const referralCount = RefLib.getRefCount();
 const referralBonus = Number(config.REFERRAL_REWARD) || 10;
 
