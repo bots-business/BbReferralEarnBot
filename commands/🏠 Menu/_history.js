@@ -16,12 +16,6 @@ const history = Bot.getProp(`withdraw_history-${user.telegramid}`, []);
 // If no history, alert user
 if (!history.length) return smartBot.run({ command: "history:noData" });
 
-const statusMap = {
-  pending: "🔄 Pending",
-  approved: "✅ Approved",
-  rejected: "❌ Rejected"
-};
-
 // Limit to the most recent 10 entries
 const latestWithdrawals = history.slice(0, 10);
 
@@ -37,7 +31,7 @@ function formatWithdrawal(item, index) {
     index: index + 1,
     time: formatWithdrawalTime(item.id),
     amount: item.amount,
-    status: statusMap[item.status] || "❓ Unknown"
+    status: smartBot.params[item.status] || "❓ Unknown"
   });
 
   return smartBot.fill(smartBot.params.withdrawalTemplate);

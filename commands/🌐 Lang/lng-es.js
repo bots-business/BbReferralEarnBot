@@ -192,6 +192,9 @@ const LANG = {
   },
   "titles": {
     "curLang": currentLang,
+    "pending": "🔄 Pendiente",
+    "approved": "✅ Aprobado",
+    "rejected": "❌ Rechazado",
     "withdrawalTemplate": "🔹 *Retiro #{index}:*\n⏰ *Hora:* {time}\n💸 *Monto:* {amount}\n📌 *Estado:* {status}"
   },
   "types": {
