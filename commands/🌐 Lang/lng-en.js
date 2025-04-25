@@ -197,7 +197,8 @@ const LANG = {
     "pending": "🔄 Pending",
     "approved": "✅ Approved",
     "rejected": "❌ Rejected",
-    "withdrawalTemplate": "🔹 *Withdrawal #{index}:*\n⏰ *Time:* {time}\n💸 *Amount:* {amount}\n📌 *Status:* {status}"
+    "withdrawalTemplate": "🔹 *Withdrawal #{index}:*\n⏰ *Time:* {time}\n💸 *Amount:* {amount}\n📌 *Status:* {status}",
+    "noReferrals": "No referrals yet."
   },
   "types": {
     "adminOnlyError": "⛔ Access Denied!\n\nThis action is restricted to administrators only.",

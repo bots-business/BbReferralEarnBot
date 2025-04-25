@@ -195,7 +195,8 @@ const LANG = {
     "pending": "🔄 Pendiente",
     "approved": "✅ Aprobado",
     "rejected": "❌ Rechazado",
-    "withdrawalTemplate": "🔹 *Retiro #{index}:*\n⏰ *Hora:* {time}\n💸 *Monto:* {amount}\n📌 *Estado:* {status}"
+    "withdrawalTemplate": "🔹 *Retiro #{index}:*\n⏰ *Hora:* {time}\n💸 *Monto:* {amount}\n📌 *Estado:* {status}",
+    "noReferrals": "Aún no hay referidos."
   },
   "types": {
     "adminOnlyError": "⛔ ¡Acceso denegado!\n\nEsta acción está restringida solo a administradores.",

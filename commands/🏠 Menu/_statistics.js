@@ -34,7 +34,7 @@ for (let i = 0; i < topReferrers.length && i < 10; i++) {
 
 // If no one has referred anyone yet, show a default message
 if (topRefText === "") {
-  topRefText = "_No referrals yet._";
+  topRefText = smartBot.params.noReferrals;
 }
 
 // Pass the total users and top referral list to SmartBot for message templates
