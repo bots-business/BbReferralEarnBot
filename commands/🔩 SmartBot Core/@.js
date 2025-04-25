@@ -52,18 +52,23 @@ function isAdmin(telegramId) {
   return admins.includes(String(telegramId));
 }
 
+function runAccessDenied(){
+  smartBot.run({
+    command: 'admin:accessDenied',
+    options: {
+      user_telegramid: user?.telegramid
+    }
+  });
+}
+
 // Restrict access to admin commands
 if (command?.folder === "🔐 Admin") {
   const isBroadcast = command?.name === "/send_broadcast";
   const isAuthorized = user && isAdmin(user.telegramid);
 
   if (!isBroadcast && !isAuthorized) {
-    return smartBot.run({
-      command: 'admin:accessDenied',
-      options: {
-        user_telegramid: user?.telegramid
-      }
-    });
+    runAccessDenied();
+    return
   }
 
   // Admin is authorized — continue with admin commands
