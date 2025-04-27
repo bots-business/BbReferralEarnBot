@@ -8,15 +8,15 @@ Admins enjoy full control via an integrated dashboard with no coding required. �
 
 ## Table of Contents 📑
 
-- [About BbReferralEarnBot](#about-bbreferralearnbot)  
-- [Key Features](#key-features)  
-  - [User Tools](#user-tools)  
-  - [Admin Tools](#admin-tools)  
-- [SmartBot Architecture](#smartbot-architecture)  
-- [Getting Started (Bots.Business)](#getting-started-botsbusiness)  
-- [Live Demo](#live-demo)  
-- [Screenshots](#screenshots)  
-- [License](#license)  
+- [About BbReferralEarnBot](#about-bbreferralearnbot)
+- [Key Features](#key-features)
+  - [User Tools](#user-tools)
+  - [Admin Tools](#admin-tools)
+- [SmartBot Architecture](#smartbot-architecture)
+- [Getting Started (Bots.Business)](#getting-started-botsbusiness)
+- [Live Demo](#live-demo)
+- [Screenshots](#screenshots)
+- [License](#license)
 - [Support](#support)
 
 ---
@@ -35,44 +35,44 @@ Built using the **SmartBot architecture**, it’s both developer-friendly and ad
 
 ### User Tools 🧑‍💻
 
-- **Referral Link Generator** 🔗  
+- **Referral Link Generator** 🔗
   Every user gets a unique referral link to share with friends.
 
-- **Referral Dashboard** 📊  
+- **Referral Dashboard** 📊
   Track invites, rewards, claim bonuses, and monitor your earnings.
 
-- **Wallet Management** 💸  
+- **Wallet Management** 💸
   View current balance, pending rewards, and withdrawal history.
 
-- **Bonus System** 🎁  
+- **Bonus System** 🎁
   Periodic bonus claims to increase user retention.
 
-- **Multilingual Interface** 🌍  
+- **Multilingual Interface** 🌍
   Instantly switch the interface language anytime.
 
-- **Interactive Navigation** ⌨️  
+- **Interactive Navigation** ⌨️
   Menus built with inline buttons and smart keyboards for ease of use.
 
 ---
 
 ### Admin Tools 🔧
 
-- **Referral Rules Configuration** 🏅  
+- **Referral Rules Configuration** 🏅
   Control how referrals are counted and when rewards are credited.
 
-- **User Management** 👨‍💻  
+- **User Management** 👨‍💻
   Ban/unban users, reset stats, and check referral trees.
 
-- **Channel Join Verification** 📲  
+- **Channel Join Verification** 📲
   Set mandatory channels users must join to qualify for rewards.
 
-- **Withdraw Request System** 💰  
+- **Withdraw Request System** 💰
   View and approve/deny withdrawal requests from the dashboard.
 
-- **Broadcast Messaging** 📢  
+- **Broadcast Messaging** 📢
   Instantly send messages or updates to all users.
 
-- **Analytics Dashboard** 📈  
+- **Analytics Dashboard** 📈
   Get insight into user growth, engagement, and top referrers.
 
 ---
@@ -94,19 +94,19 @@ BbReferralEarnBot is built on **SmartBot**, a highly configurable bot engine des
 
 ### Quick Setup ⚙️:
 
-1. **Install from Bots.Business Store** 🛒  
+1. **Install from Bots.Business Store** 🛒
    Visit the [Bots.Business Store](https://bots.business/store), search for **BbReferralEarnBot**, and click **Install**.
 
-2. **Run Setup Command** 📝  
-   Open your bot and type:  
+2. **Run Setup Command** 📝
+   Open your bot and type:
    ```
    /setup
    ```
 
-3. **Complete Admin Panel Configuration** 🔧  
-   - Add your required join channels  
-   - Set referral bonus amounts  
-   - Configure wallet/withdrawal settings  
+3. **Complete Admin Panel Configuration** 🔧
+   - Add your required join channels
+   - Set referral bonus amounts
+   - Configure wallet/withdrawal settings
    - Customize language and menus
 
 > No coding or server hosting required—everything is done from your BB dashboard. 📊
@@ -125,26 +125,26 @@ Want to see the bot in action? Try it out now:
 
 ## Screenshots 📸
 
-### Main Menu 🏠  
+### Main Menu 🏠
 ![Main Menu](https://i.ibb.co/HfvZs8ZC/main-menu2.png)
 
-### Referral Stats 📊  
+### Referral Stats 📊
 ![Referral Stats](https://i.ibb.co/mFbg2Jjs/referral1.png)
 
-### Wallet & Withdrawals 💳  
+### Wallet & Withdrawals 💳
 ![Wallet UI](https://i.ibb.co/J0snZMH/withdraw3.png)
 
-### Bonus Claim 🎁  
+### Bonus Claim 🎁
 ![Bonus System](https://i.ibb.co/V0PV3VY4/bonus2.png)
 
 ---
 
 ## License 📝
 
-BbReferralEarnBot is licensed under the **MIT License**.  
+BbReferralEarnBot is licensed under the **MIT License**.
 
 ## References 📚
 
-- [SmartBot Overview - Bots.Business](https://help.bots.business/smart-bot/overview)  
-- [Referral Library - Bots.Business](https://help.bots.business/libs/refferallib)  
-- [MCL Library - Bots.Business](https://help.bots.business/libs/mcl)  
+- [SmartBot Overview - Bots.Business](https://help.bots.business/smart-bot/overview)
+- [Referral Library - Bots.Business](https://help.bots.business/libs/refferallib)
+- [MCL Library - Bots.Business](https://help.bots.business/libs/mcl)
