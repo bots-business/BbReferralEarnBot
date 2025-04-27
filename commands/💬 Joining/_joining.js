@@ -20,7 +20,8 @@ const isUserMember = Libs.MembershipChecker.isMember();
 function handleNotMember() {
   if (params === "check") {
     Libs.MembershipChecker.check();
-    return smartBot.run({ command: "join:checkFailed" });
+    smartBot.run({ command: "join:checkFailed" });
+    return;
   }
 
   smartBot.add({ notJoinedChats });
@@ -28,6 +29,7 @@ function handleNotMember() {
 
 if (isUserMember) {
   smartBot.run({ command: "/menu edit" });
-} else {
-  handleNotMember();
+  return; // exit from SmartBot handle in @@
 }
+
+handleNotMember();
