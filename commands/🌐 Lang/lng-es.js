@@ -130,7 +130,7 @@ const LANG = {
     },
     "/history": {
       "edit": true,
-      "text": "*📝 Tus últimos {count} retiros:*\n{withdrawals}\n✨ _Si necesitas ayuda, no dudes en preguntar!_",
+      "text": "*📝 Tus últimos {count} retiros:*\n\n{withdrawals}\n\n✨ _Si necesitas ayuda, no dudes en preguntar!_",
       "inline_buttons": "#/keyboard/backToMenu"
     },
     "history:noData": {
