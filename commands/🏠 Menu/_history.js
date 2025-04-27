@@ -19,6 +19,8 @@ if (!history.length) return smartBot.run({ command: "history:noData" });
 // Limit to the most recent 10 entries
 const latestWithdrawals = history.slice(0, 10);
 
+const withdrawalTemplate = smartBot.params.withdrawalTemplate;
+
 // Helper function to format withdrawal time
 function formatWithdrawalTime(itemId) {
   const withdrawalTime = new Date(parseInt(itemId.replace("wd_", "")));
@@ -34,15 +36,14 @@ function formatWithdrawal(item, index) {
     status: smartBot.params[item.status] || "❓ Unknown"
   });
 
-  return smartBot.fill(smartBot.params.withdrawalTemplate);
+  return smartBot.fill(withdrawalTemplate);
 }
 
 // Format all withdrawal entries
-const withdrawalsText = latestWithdrawals.map(formatWithdrawal).join("");
+const withdrawalsText = latestWithdrawals.map(formatWithdrawal).join("\n\n");
 
 // Save final values to use in a message template
 smartBot.add({
   count: latestWithdrawals.length,
   withdrawals: withdrawalsText
 });
-
