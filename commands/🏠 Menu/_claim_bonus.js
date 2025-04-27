@@ -14,6 +14,11 @@ const intervalHours  = Number(config.BONUS_INTERVAL) || 24;    // hours
 const bonusAmount    = Number(config.BONUS_AMOUNT)  || 5;      // money
 const currency       = config.CURRENCY             || "USD";
 
+function onStarting(){
+  // cooldown just started, but still give bonus
+  onEnding();
+}
+
 function onEnding() {
   balance.add(bonusAmount);
   smartBot.add({ bonus: bonusAmount, interval: intervalHours });
@@ -30,6 +35,7 @@ function onWaiting(waitSec) {
 Libs.CooldownLib.user.watch({
   name: "DailyBonus",
   time: intervalHours * 3600, // in seconds
-  onEnding:   onEnding,
+  onStarting: onStarting,
+  onEnding:  onEnding,
   onWaiting:  onWaiting
 });
